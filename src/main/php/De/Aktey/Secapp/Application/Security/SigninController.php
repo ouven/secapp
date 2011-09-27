@@ -50,7 +50,7 @@ class De_Aktey_Secapp_Application_Security_SigninController extends Zend_Control
 			$c= $this->_sess->c;
 			$m= $this->_sess->m;
 			Zend_Session::namespaceUnset(__CLASS__);
-		} catch (De_Aktey_Secapp_Application_Security_Authexception $ae) {
+		} catch (De_Aktey_Secapp_Application_Security_AuthException $ae) {
 			$this->_sess->fail= $ae->getMessage();
 		}
 		$this->_helper->_redirector->gotoSimple($a, $c, $m);
