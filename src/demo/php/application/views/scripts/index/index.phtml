@@ -1,0 +1,88 @@
+<h1>Secapp Demo</h1>
+<article>
+    <h2>Zend application security</h2>
+    This framework adds role based security support to a Zend application.
+    Therefor controller classes or action methods could be "annotated"
+    with an "@roles(role1, role2)" annotation, which means in an PHP context
+    to put an @role in the doc block of your class or method.<br />
+    If the body of the @roles annotation kept empty, means that the user
+    has to be logged in without having a certain role.<br />
+    In the example there are two roles: admin, user. There are also
+    two registered users: <strong>userotto</strong>, who has only the user role and <strong>adminotto</strong>,
+    who has both, the admin and the user role. There is <strong>no password</strong>
+    to log in to the demo sites, just keep it blank.
+</article>
+<article>
+    <h2>Resource injection</h2>
+    You can annotate a member variable of a controller or the Session
+    with an @inject annotation. For example if you write:
+    <code lang="php">
+        class MySession extends De_Aktey_Secapp_application_Session {
+        /**
+        * @inject(database)
+        */
+        public $db;
+
+        [...]
+        }
+    </code>
+    You will get the object from a call like 
+    <code lang="php">$bootstrap->getResource('database');</code>
+    injected into the $db member variable.<br />
+    With PHP versions higher or equal than 5.3 the member can also be private.
+</article>
+<article>
+    <h2>Setup</h2>
+    <ol>
+        <li>
+            Change your bootstrap to extend from <i>De_Aktey_Secapp_Application_Bootstrap</i>.
+        </li>
+        <li>
+            Override <i>De_Aktey_Secapp_Application</i> and instanciate it in your <i>index.php</i>.
+        </li>
+        <li>
+            Override <i>De_Aktey_Secapp_Application::getSessionClassName()</i>, to return the name
+            of a class which extends <i>De_Aktey_Secapp_Security_Session</i>.
+        </li>
+        <li>
+            The session class has to override
+            <i>De_Aktey_Secapp_Application_Security_Session::_authenticate</i>, which
+            is called during the authentication process. This method has to do the
+            authentication (see the example's session class <i>SecappDemo_Session</i>).
+        </li>
+        <li>
+            The session class also has to override
+            <i>De_Aktey_Secapp_Application_Security_Session::_initRoles</i>, which
+            is called right after _authenticate. This method has to set the
+            roles for a principal (see the example's session class <i>SecappDemo_Session</i>).
+        </li>
+        <li>
+            If a visitor trys to naviagte to a secured site, he will be redirected by default
+            to the module <i>Security</i>, the controller <i>signin</i> and the action <i>index</i>.
+            You can override the method <i>De_Aktey_Secapp_Application_Security_Session::redirectSignin</i>
+            to change this default behaviour.
+        </li>
+        <li>
+            If a loggedin visitor trys to naviagte to a secured site, without the correct role,
+            he will be redirected to the error page <i>forbidden</i>. This default behaviour
+            can be changed by overriding the method 
+            <i>De_Aktey_Secapp_Application_Security_Session::redirectForbidden</i>.
+        </li>
+        <li>
+            The easiest way to create a login page is to just extend the
+            <i>De_Aktey_Secapp_Application_Security_SigninController</i> (see the examples
+            controllers/SecureController.php).<br/>
+            It will register the view helper <i>De_Aktey_Secapp_Application_Security_SigninViewHelper</i>
+            with the name <i>signin</i>, which provides the login form.<br />
+            This controller does also provide a logout link.
+        </li>
+        <li>
+            You can find some staticly callable shortcut methods in the
+            <i>De_Aktey_Secapp_Application_Security_Context</i> class.
+        </li>
+    </ol>
+</article>
+<article>
+    <h2>Try it</h2>
+    Click the links in the navi bar at the top, to see the framework in action.
+</article>

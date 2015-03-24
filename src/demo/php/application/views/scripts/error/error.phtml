@@ -1,0 +1,14 @@
+<?= $this->DocType() ?>
+<html>
+    <head>
+        <title>Secapp Demo: <?= $this->error ?></title>
+    </head>
+    <body>
+        <h1>Secapp Demo Error</h1>
+        <?php if ($this->message): ?>
+            <p>The following error occurred:</p>
+            <pre><?php echo $this->message ?></pre>
+        <?php endif; ?>
+    </body>
+</html>
+

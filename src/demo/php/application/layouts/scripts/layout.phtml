@@ -1,0 +1,37 @@
+<?= $this->doctype() ?>
+<html>
+    <head>
+        <title>Secapp Demo</title>
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl() ?>/css/layout.css" />
+        <?= $this->headLink() ?>
+        <?= $this->headStyle() ?>
+        <?= $this->headScript() ?>
+    </head>
+    <body>
+        <nav>
+            <a href="<?= $this->url(array('controller' => 'Index', 'action' => 'index'), null, true) ?>">Home</a>
+            <a href="<?= $this->url(array('controller' => 'User', 'action' => 'index'), null, true) ?>">User</a>
+            <a href="<?= $this->url(array('controller' => 'Admin', 'action' => 'index'), null, true) ?>">Admin</a>
+            <?php if (De_Aktey_Secapp_Application_Security_Context::isAuthenticated()) : ?>
+                <a href="<?= $this->url(array('controller' => 'Secure', 'action' => 'logout'), null, true) ?>">Logout</a>
+            <?php endif ?>
+        </nav>
+        <aside>
+            <article>
+                Download this minimal <a href="http://secapp.googlecode.com/files/secapp-demo-1.1.zip">Zend application</a>.
+            </article>
+            <article>
+                Download the <a href="http://secapp.googlecode.com/files/secapp-lib-1.1.zip">Secapp security library</a>.
+            </article>
+            <article>
+                Visit the <a target="_blank" href="http://ruben-wagner.users.sourceforge.net/">author's profile</a>.
+            </article>
+            <article>
+                Visit the project's <a target="_blank" href="http://code.google.com/p/secapp/">source home</a>.
+            </article>
+        </aside>
+        <section id="content">
+            <?= $this->layout()->content ?>
+        </section>
+    </body>
+</html>
